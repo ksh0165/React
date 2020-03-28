@@ -65,23 +65,25 @@ class App extends Component {
     }else if(this.state.mode === "create"){
       _article = <CreateContent onSubmit={function(_title,_desc){
         this.max_id = this.max_id+1; 
-        var _contents = this.state.contents.push({
+        {/*var _contents = this.state.contents.push({
           id: this.max_id, 
           title: _title, 
           desc: _desc
         }) 
         this.setState = ({ 
           contents: _contents
-        });
+        });*/}
+        var newContents = Array.from(this.state.contents);
+        newContents.push({id:this.max_id,title:_title,desc:_desc});
+        this.setState({contents: newContents});
         console.log(_title, _desc);
-        console.log(this.state.contents); 
-      }.bind(this)}></CreateContent>
         console.log(this.state.contents);
+      }.bind(this)}></CreateContent>
     }
     return (
       <div className="App">
         <Subject title={this.state.subject.title} sub={this.state.subject.sub} onChangePage={function(){this.setState({mode:'welcome'});}.bind(this)}></Subject>
-        <TDC onChangePage={function(id){this.setState({mode:'read',select_id:Number(id)});}.bind(this)}data={this.state.contents}></TDC>
+        <TDC onChangePage={function(id){this.setState({mode:'read',select_id:Number(id)});}.bind(this)} data={this.state.contents}></TDC>
         <Control onChangeMode={function(_mode){this.setState({mode: _mode});}.bind(this)}></Control>
         {_article}
         {/*<Content title={_title} desc={_desc}></Content>*/}
